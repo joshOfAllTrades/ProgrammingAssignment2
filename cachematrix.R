@@ -1,15 +1,16 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Matrix inversion is usually a costly computation. This library enables the
+## caching of this calculation through a special matrix wrapper.
 
-## Write a short comment describing this function
-
+## Creates a matrix wrapper that can cache its inverse.
+##
+## mtrx: an invertable matrix
 makeCacheMatrix <- function(x = matrix()) {
-
 }
 
-
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+## This function computes the inverse of the matrix contained within the matrix
+## wrapper. If the inverse has already been calculated (and the matrix has not
+## changed), then cacheSolve() will retrieve the inverse from the cache.
+##
+## cm: a cache matrix object
+cacheSolve <- function(cm, ...) {
 }
