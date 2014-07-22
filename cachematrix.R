@@ -8,13 +8,18 @@ makeCacheMatrix <- function(mtrx = matrix()) {
     # The cached inverse
     invMtrx <- NULL
 
+    # Sets a new matrix
     set <- function(newMtrx) {
         mtrx <<- newMtrx
+        # Invalidate the cache since we have a changed matrix
         invMtrx <<- NULL
     }
 
+    # Returns the matrix we are operating on
     get <- function() { mtrx }
 
+    # Retrieves the inverse matrix - the returned value may be freshly
+    # calculated or may be returned from the cache
     getInv <- function(...) {
         # The inverse will be NULL if it hasn't been calculated
         if(is.null(invMtrx)) {
@@ -27,6 +32,7 @@ makeCacheMatrix <- function(mtrx = matrix()) {
         invMtrx
     }
 
+    # Return the closure's API
     list(set = set, get = get, getInv = getInv)
 }
 
@@ -36,5 +42,6 @@ makeCacheMatrix <- function(mtrx = matrix()) {
 ##
 ## cm: a cache matrix object
 cacheSolve <- function(cm, ...) {
+    # Not much to do here since the closure takes care of itself...
     cm$getInv(...)
 }
