@@ -13,19 +13,21 @@ makeCacheMatrix <- function(mtrx = matrix()) {
         invMtrx <<- NULL
     }
 
-    get <- function() {
-        mtrx
-    }
+    get <- function() { mtrx }
 
-    setInv <- function(inv) {
-        invMtrx <<- inv
-    }
+    getInv <- function(...) {
+        # The inverse will be NULL if it hasn't been calculated
+        if(is.null(invMtrx)) {
+            message("Calculating inverse...")
+            invMtrx <<- solve(mtrx, ...)
+        } else {
+            message("Getting cached inverse...")
+        }
 
-    getInv <- function() {
         invMtrx
     }
 
-    list(set = set, get = get, setInv = setInv, getInv = getInv)
+    list(set = set, get = get, getInv = getInv)
 }
 
 ## This function computes the inverse of the matrix contained within the matrix
@@ -34,15 +36,5 @@ makeCacheMatrix <- function(mtrx = matrix()) {
 ##
 ## cm: a cache matrix object
 cacheSolve <- function(cm, ...) {
-    inv <- cm$getInv()
-    if(!is.null(inv)) {
-        message("Getting cached inverse...")
-    } else {
-        message("Calculating inverse...")
-        mtrx <- cm$get()
-        inv <- solve(mtrx, ...)
-        cm$setInv(inv)
-    }
-
-    inv
+    cm$getInv(...)
 }
